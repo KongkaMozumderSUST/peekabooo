@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { ImCross } from "react-icons/im";
+import ProgressChart from "./ProgressChart";
 
 interface Student {
   name: string;
@@ -7,6 +8,11 @@ interface Student {
 }
 
 const StudentList: React.FC = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const students: Student[] = [
     {
       name: "faridul reza",
@@ -32,15 +38,21 @@ const StudentList: React.FC = () => {
 
   return (
     <div className="flex justify-end p-10">
-      <div className="bg-[#FFFDFD] px-4 py-2 h-[500px]  w-[300px] flex flex-col  ">
+      <div className="bg-[#FFFDFD] px-4 py-2   w-[300px] flex flex-col  ">
+        {open && <ProgressChart handleClose={handleClose} />}
         <button className="bg-[#54185E] text-white px-2 py-2 mx-3 my-2  ">
           List of students
         </button>
         <div className="px-4 mt-4 divide-y divide-[#1E1919] overflow-y-scroll  ">
           {students.map((student) => (
-            <div className="flex gap-2 py-3 ">
-              <img className="h-6 w-6 rounded-full" src={student.Image} />
-              <div>{student.name}</div>
+            <div className="flex items-center justify-between">
+              <div className="flex gap-2 py-3 cursor-pointer ">
+                <img className="h-6 w-6 rounded-full" src={student.Image} />
+                <div>{student.name}</div>
+              </div>
+              <div className="cursor-pointer" onClick={handleOpen}>
+                35%
+              </div>
             </div>
           ))}
         </div>
